@@ -35,33 +35,19 @@ jobs:
             zlib1g-dev \
             libncurses5-dev \
             libncursesw5-dev \
-            libtinfo5 \
             cmake \
             libffi-dev \
             libssl-dev \
             autopoint \
             gettext
 
-      - name: Install Android SDK command line tools
-        run: |
-          mkdir -p "$ANDROID_HOME/cmdline-tools"
-          cd /tmp
-
-          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
-          unzip -q commandlinetools-linux-11076708_latest.zip
-
-          mkdir -p "$ANDROID_HOME/cmdline-tools/latest"
-          mv cmdline-tools/* "$ANDROID_HOME/cmdline-tools/latest/"
-
-          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
-
       - name: Accept Android SDK licenses
         run: |
-          yes | sdkmanager --licenses || true
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
 
       - name: Install Android SDK packages
         run: |
-          sdkmanager \
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
             "platform-tools" \
             "platforms;android-33" \
             "build-tools;33.0.2"
