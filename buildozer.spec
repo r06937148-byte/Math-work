@@ -1,5 +1,7 @@
 [app]
 
+android.accept_sdk_license = True
+
 title = Math Work
 
 package.name = mathwork
