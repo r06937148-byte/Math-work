@@ -8,8 +8,25 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Get project files
+      - name: Checkout project
         uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          accept-android-sdk-licenses: true
+
+      - name: Install Android packages
+        run: |
+          sdkmanager "platform-tools"
+          sdkmanager "build-tools;37.0.0"
+          yes | sdkmanager --licenses
 
       - name: Install system dependencies
         run: |
@@ -18,7 +35,6 @@ jobs:
             git \
             zip \
             unzip \
-            openjdk-17-jdk \
             python3-pip \
             python3-virtualenv \
             autoconf \
